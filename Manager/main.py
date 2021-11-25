@@ -1,11 +1,13 @@
-import subprocess
 import sys
-subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+import manager
 import paramiko, getpass, re, time
 import configparser
 import time
 from tkinter import *
 import os
+
+mgr = manager.update()
+mgr.all()
 
 config = configparser.ConfigParser()
 config.sections()
@@ -14,8 +16,11 @@ config.read('manager.conf')
 from paramiko import SSHClient
 
 host = config['host.info']['hostname']
+print('Logging into:', host)
 local_hostname = config['host.info']['local_host']
+print('Local hostmame:', local_hostname)
 username = config['host.info']['username']
+print('As user:', username)
 password = config['host.info']['passwd']
 sudo_pswd = config['host.info']['sudo_pswd']
 
@@ -143,3 +148,4 @@ close_button = Button(root, text='Sudo', command=rootCmd)
 close_button.grid(row=21, column=0)
 
 root.mainloop()
+
