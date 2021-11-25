@@ -1,4 +1,2 @@
 paramiko
-getpass
-re
 configparser
