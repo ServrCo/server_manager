@@ -7,7 +7,7 @@ from tkinter import *
 import os
 
 mgr = manager.manager()
-mgr.all()
+mgr.updateall()
 
 config = configparser.ConfigParser()
 config.sections()
