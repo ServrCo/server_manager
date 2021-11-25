@@ -1,0 +1,4 @@
+paramiko
+getpass
+re
+configparser
