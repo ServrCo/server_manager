@@ -1,9 +1,11 @@
+import subprocess
+import sys
+subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
 import paramiko, getpass, re, time
 import configparser
 import time
 from tkinter import *
 import os
-import sys
 
 config = configparser.ConfigParser()
 config.sections()
