@@ -15,6 +15,7 @@ config.read('manager.conf')
 
 from paramiko import SSHClient
 
+# Get login info
 host = config['host.info']['hostname']
 print('Logging into:', host)
 local_hostname = config['host.info']['local_host']
@@ -24,14 +25,18 @@ print('As user:', username)
 password = config['host.info']['passwd']
 sudo_pswd = config['host.info']['sudo_pswd']
 
+# Connect to server via SSH.
 client = SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 client.connect(host, username=username, password=str(password))
 
 compWindow = 0
 
+# Make main tkinter window.
 root = Tk()
 
+# Stop, start, or restart a service. Will add an option on config file to change between
+# service and systemctl later.
 def serviceOptions():
 	def sRestart():
 		servce = input('\nservice name: ')
@@ -46,7 +51,7 @@ def serviceOptions():
 		servce = input('\nservice name: ')
 		stdin, stdout, stderr = client.exec_command('service restart' + ' ' + servce)
 		print('Started', servce)
-
+	# Make a new tkinter window, the lazy way.
 	window = Tk()
 	restart = Button(window, text="restart", command=sRestart)
 	restart.grid(row=1, column=0)
@@ -62,6 +67,7 @@ def serviceOptions():
 serviceOpt = Button(root, text="Service", command=serviceOptions)
 serviceOpt.grid(row=1, column=0)
 
+# TightVNCServer functions, start/stop.
 def vncServer():
 	vncs = Tk()
 	def start():
@@ -85,6 +91,7 @@ def vncServer():
 vServer = Button(root, text='VNC Server', command=vncServer)
 vServer.grid(row=3, column=0)
 
+# Power options, will add a halt option later.
 def power():
 	pwr = Tk()
 	def off():
@@ -112,6 +119,7 @@ def power():
 powerCmd = Button(root, text='Power', command=power)
 powerCmd.grid(row=4, column=0)
 
+# Run any single-line command.
 def runCommand():
 	ecomd = Tk()
 	cmd = Entry(ecomd, width=50)
@@ -129,6 +137,7 @@ def runCommand():
 runCmd = Button(root, text='Command', command=runCommand)
 runCmd.grid(row=20, column=0)
 
+# Run a command with sudo privelages.
 def rootCmd():
 	rcmd = Tk()
 	rootcommand = Entry(rcmd, width=50)
@@ -144,8 +153,10 @@ def rootCmd():
 
 	rcmd.mainloop()
 
-close_button = Button(root, text='Sudo', command=rootCmd)
-close_button.grid(row=21, column=0)
+sudo_button = Button(root, text='Sudo', command=rootCmd)
+sudo_button.grid(row=21, column=0)
 
+# Useless comment:
+	# Mainloop.
 root.mainloop()
 
