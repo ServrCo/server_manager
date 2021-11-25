@@ -6,7 +6,7 @@ import time
 from tkinter import *
 import os
 
-mgr = manager.update()
+mgr = manager.manager()
 mgr.all()
 
 config = configparser.ConfigParser()
